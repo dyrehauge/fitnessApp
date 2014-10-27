@@ -1,0 +1,6 @@
+tmp
+.DS_Store
+.settings
+.project
+build
+build.log
