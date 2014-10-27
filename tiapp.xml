@@ -35,6 +35,10 @@
                 <false/>
                 <key>UIStatusBarStyle</key>
                 <string>UIStatusBarStyleDefault</string>
+                <key>NSLocationWhenInUseUsageDescription</key>
+                <string>We need your location to show you on the map.</string>
+                <key>NSLocationAlwaysUsageDescription</key>
+                <string>We need your location to show you on the map.</string>
             </dict>
         </plist>
     </ios>
@@ -47,7 +51,10 @@
         </splash>
         <theme>default</theme>
     </mobileweb>
-    <modules/>
+    <modules>
+        <module platform="iphone">ti.map</module>
+        <module platform="android">ti.map</module>
+    </modules>
     <deployment-targets>
         <target device="android">true</target>
         <target device="blackberry">false</target>

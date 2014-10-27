@@ -1,3 +1,5 @@
+var mapWindow = require('ui/map');
+
 function dashboard() {
 	// create window
 	var dashboardWindow = Ti.UI.createWindow({  
@@ -8,6 +10,9 @@ function dashboard() {
 	// temporary demo button
 	var tempButton = Ti.UI.createButton({
 		title: 'Open Map!'
+	});
+	tempButton.addEventListener('click', function(){
+		mapWindow(dashboardWindow).open();
 	});
 	dashboardWindow.add(tempButton);
 	
