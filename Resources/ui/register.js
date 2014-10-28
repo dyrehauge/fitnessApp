@@ -34,7 +34,9 @@ function RegisterView() {
 	});
 	
 	back.addEventListener('click', function(e){
-		var welcomeView = require('ui/welcome-view')();
+		var welcomeView = require('ui/welcome-view');
+		new welcomeView().open();
+		
 		registerWin.close();
 	});
 
@@ -244,9 +246,9 @@ function RegisterView() {
 	registerWin.add(registerBtn);
 	
 	//
-	// Open register window
+	// return register window
 	//
-	registerWin.open();
+	return registerWin;
 };
 
 module.exports = RegisterView;

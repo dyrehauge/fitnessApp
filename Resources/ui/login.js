@@ -34,7 +34,9 @@ function LoginView() {
 	});
 	
 	back.addEventListener('click', function(e){
-		var welcomeView = require('ui/welcome-view')();
+		var welcomeView = require('ui/welcome-view');
+		new welcomeView().open();
+		
 		loginWin.close();
 	});
 	
@@ -137,9 +139,9 @@ function LoginView() {
 	loginWin.add(forgotten);
 	
 	//
-	// Open loginWindow
+	// return loginWindow
 	//
-	loginWin.open();
+	return loginWin;
 };
 
 module.exports = LoginView;
