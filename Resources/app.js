@@ -1,4 +1,3 @@
 (function() {
-	var app = require('ui/dashboard');
-	new app().open();
+	var app = require('ui/welcome-view')();
 })();
