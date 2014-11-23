@@ -1,3 +1,8 @@
+//
+// Window for Register screen - Rhino App
+// Directs the user back to welcomescreen
+//
+
 function RegisterView() {
 	// this sets the background color of the master UIView (when there are no windows/tab groups on it)
 	Titanium.UI.setBackgroundColor('#000');

@@ -1,3 +1,8 @@
+//
+// Window for Login screen - Rhino App
+// Directs the user to Dashboard or back to welcomescreen
+//
+
 function LoginView() {
 	// this sets the background color of the master UIView (when there are no windows/tab groups on it)
 	Titanium.UI.setBackgroundColor('#000');
