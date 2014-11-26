@@ -12,7 +12,7 @@ function LoginView() {
 	//
 	var loginWin = Titanium.UI.createWindow({  
 	    title:'Grid',
-	    backgroundImage: 'img/bg.jpg',
+	    backgroundImage: '/img/bg.jpg',
 	    layout: 'vertical'
 	});
 	
@@ -121,13 +121,7 @@ function LoginView() {
 	
 	// Authenticate login
 	loginBtn.addEventListener('click', function(e) {
-		if (user.value === "admin" && pass.value === "1234") {
-			alert("success");
-		}
-		else {
-			alert("Forkert adgangskode og/eller brugernavn");
-		}
-		
+		var loginAuth = require('functions/login-data')(user.value, pass.value);
 	});
 	
 	loginWin.add(loginBtn);

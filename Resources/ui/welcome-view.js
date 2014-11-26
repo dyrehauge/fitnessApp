@@ -14,7 +14,7 @@ function WelcomeView() {
 	//
 	var win1 = Titanium.UI.createWindow({  
 	    title:'Grid',
-	    backgroundImage: 'img/bg.jpg',
+	    backgroundImage: '/img/bg.jpg',
 	    layout: 'vertical'
 	});
 	
@@ -30,7 +30,7 @@ function WelcomeView() {
 	var logo = Ti.UI.createImageView ({
 		width: '50%',
 		height: 'auto',
-		image: 'img/logo.png'
+		image: '/img/logo.png'
 	});
 	
 	win1.add(logoView);
@@ -150,7 +150,9 @@ function WelcomeView() {
 	});
 	
 	win1.add(choiceView);
-	choiceView.add(login, breaker2, register);
+	choiceView.add(login);
+	choiceView.add(breaker2);
+	choiceView.add(register);
 	
 	//
 	// Login with Facebook
@@ -171,7 +173,7 @@ function WelcomeView() {
 		width:'65%',
 		height: '65%',
 		top: '17.5%',
-		image: 'img/Facebook.png'
+		image: '/img/Facebook.png'
 	});
 	
 	var facebook = Ti.UI.createButton ({
@@ -188,7 +190,8 @@ function WelcomeView() {
 	
 	win1.add(facebookView);
 	facebookIconView.add(facebookIcon);
-	facebookView.add(facebookIconView, facebook);
+	facebookView.add(facebookIconView);
+	facebookView.add(facebook);
 	
 	//
 	// open main Window

@@ -1,5 +1,5 @@
 //
-// Window for Register screen - Rhino App
+// Window for Register screen
 // Directs the user back to welcomescreen
 //
 
@@ -12,7 +12,7 @@ function RegisterView() {
 	//
 	var registerWin = Titanium.UI.createWindow({  
 	    title:'Grid',
-	    backgroundImage: 'img/bg.jpg',
+	    backgroundImage: '/img/bg.jpg',
 	    layout: 'vertical'
 	});
 	
@@ -103,22 +103,22 @@ function RegisterView() {
 	
 	
 	//
-	// Age field
+	// Email field
 	//
-	var age = Ti.UI.createTextField ({
+	var email = Ti.UI.createTextField ({
 		width:'70%',
 		height: '90px',
 		backgroundColor: '#fff',
 		borderColor: '#000',
 		borderWidth: '1px',
 		top: '20px',
-		hintText: 'Alder',
- 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		hintText: 'Email',
+ 		keyboardType:Titanium.UI.KEYBOARD_EMAIL,
     	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
     	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
 	});
 	
-	registerWin.add(age);
+	registerWin.add(email);
 	
 	//
 	// Weight field
@@ -169,7 +169,8 @@ function RegisterView() {
 	});
 	
 	registerWin.add(genderTitle);
-	genderTitle.add(male, female);
+	genderTitle.add(male);
+	genderTitle.add(female);
 	
 	//
 	// Gender checkboxes
@@ -208,8 +209,9 @@ function RegisterView() {
 	});
 	
 	registerWin.add(genderBoxes);
-	genderBoxes.add(maleBoxView, femaleBoxView);
+	genderBoxes.add(maleBoxView);
 	maleBoxView.add(maleBox);
+	genderBoxes.add(femaleBoxView);
 	femaleBoxView.add(femaleBox);
 	
 	//
@@ -246,6 +248,11 @@ function RegisterView() {
 			fontSize: '15dp',
 			fontWeight: 'bold'
 		}
+	});
+	
+	// Authenticate register
+	registerBtn.addEventListener('click', function(e) {
+		var registerAuth = require('functions/register-user')(user.value, pass.value, email.value);
 	});
 	
 	registerWin.add(registerBtn);
