@@ -1,4 +1,9 @@
 function mapWindow(prevWindow) {
+	mapRoute = [];
+	trackingRunning = false;
+	
+	var self = this;
+	
 	// Map Window
 	var mapWindow = Titanium.UI.createWindow({
 	    backgroundColor: '#0ff',
@@ -53,6 +58,9 @@ function mapWindow(prevWindow) {
 		left: 100 / 3 + '%',
 		width: 100 / 3 + '%'
 	});
+	startButton.addEventListener('click', function() {
+		trackingRunning = true;
+	});
 	controlsView.add(startButton);
 	var pauseButton = Ti.UI.createButton({
 		title: 'Pause',
@@ -61,25 +69,18 @@ function mapWindow(prevWindow) {
 		right: '0',
 		width: 100 / 3 + '%'
 	});
+	pauseButton.addEventListener('click', function() {
+		trackingRunning = false;
+	});
 	controlsView.add(pauseButton);
 	mapWindow.add(controlsView);
 	
 	// Map
-	var isIOS = (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad');
-	var Map;
-	if (isIOS && !Ti.Map) {
-		try {
-			Map = require('ti.map');
-		} catch(e) {
-			alert("Add the `ti.map` module in the `tiapp.xml` file when running on TiSDK 3.2.0.GA and later.");
-		}
-	} else {
-		Map = Ti.Map;
-	}
+	var Map = require('ti.map');
 	
 	// create mapview
 	var mapview = Map.createView({
-		mapType: Map.STANDARD_TYPE,
+		mapType: Map.NORMAL_TYPE,
 		animate:true,
 		regionFit:true,
 		userLocation:true,
@@ -101,6 +102,58 @@ function mapWindow(prevWindow) {
 	        };
 		});
 	});
+	
+	// run addRoute function everytime location changes
+	Ti.Geolocation.addEventListener('location', locationChanged);
+	
+	// run addRoute function when window is in focus
+	mapWindow.addEventListener('focus', updateRoute);
+	
+	function locationChanged(e) {
+		if (trackingRunning) {
+			if (e.coords && e.coords.latitude && e.coords.longitude) {
+		        var latitude = e.coords.latitude;
+				var longitude = e.coords.longitude;
+
+				mapview.region = {
+		            latitude: latitude,
+		            longitude: longitude,
+		            latitudeDelta:0.001,
+		            longitudeDelta:0.001
+		        };
+		        
+				
+				// add location to global route
+				mapRoute.push({'latitude':latitude, 'longitude':longitude});
+			}
+		}
+		
+        updateRoute();
+	};
+	
+	var route;
+	
+	// add route to map
+	function updateRoute() {
+		// check if we have any points
+		if (mapRoute.length) {
+			// create our route using our list of points
+			route = Map.createRoute({
+				name: "routePoint",
+				points: mapRoute,
+				color: "red",
+				width: 4
+			});
+			
+			// add route to map
+			mapview.removeRoute(route);
+			mapview.addRoute(route);
+		}
+		else if (route) {
+			mapview.removeRoute(route);
+			route = null;
+		}
+	};
 	
 	mapWindow.add(mapview);
 
