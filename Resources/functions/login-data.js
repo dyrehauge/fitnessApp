@@ -14,8 +14,14 @@ function getLogin (username, password) {
 		onload: function() {
 				
 			// if user and pass is true, then open dashboard window
-			if (this.status === 200) {	
-				alert("success");
+			if (this.status === 200) {
+				
+				// Require welcome-view.js and call the function
+			   	var dashwin = require('ui/dashboard');
+			  	new dashwin().open();
+			  		
+				alert("Velkommen " + username);
+				
 			}
 			// else give error
 			else {
