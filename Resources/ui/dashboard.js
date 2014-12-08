@@ -6,7 +6,7 @@ function dashboard() {
 	// create base UI and root window
 	//
 	var dashboardWindow = Titanium.UI.createWindow({
-		title : 'Grid',
+		title : 'Dashboard',
 		backgroundImage : 'img/bg.jpg',
 		layout : 'vertical'
 	});
@@ -33,7 +33,7 @@ function dashboard() {
 	var settingsicon = Ti.UI.createImageView({
 		width : '25px',
 		height : '25px',
-		image : '../img/settings.png',
+		image : '/img/settings.png',
 		right : '20',
 		top : '-25'
 	});
@@ -97,10 +97,9 @@ function dashboard() {
 	//
 	// Button
 	//
-
 	var chooserouteview = Ti.UI.createView({
-		width : '30%',
-		height : '7%',
+		width : '50%',
+		height : '120px',
 		backgroundColor : '#d95b44',
 		layout : 'horizontal'
 	});
@@ -145,10 +144,10 @@ function dashboard() {
 	});
 
 	dashboardWindow.add(breaker3);
+	
 	//
-	// Text view
+	// Last saved statistics
 	//
-
 	var simplelabel = Ti.UI.createLabel({
 		color : '#fff',
 		top : 50,
@@ -185,7 +184,6 @@ function dashboard() {
 	row.add(makeView('/img/1.png'));
 	row.add(makeView('/img/2.png'));
 	row.add(makeView('/img/3.png'));
-	//dashboardWindow.add(row);
 
 	//
 	// Breaker
@@ -196,6 +194,7 @@ function dashboard() {
 	});
 
 	dashboardWindow.add(breaker4);
+	
 	//
 	// Main navigation
 	//
@@ -203,11 +202,12 @@ function dashboard() {
 		layout : 'horizontal',
 		height : '200px',
 		width : '100%',
-		bottom : '0px'
+		bottom : '0',
+		position: 'fixed'
 	});
 
 	//
-	// Lav ny Rute button
+	// Lav ny Rute
 	//
 	var makeRouteButton = Titanium.UI.createButton({
 		width : '40%',
@@ -217,18 +217,12 @@ function dashboard() {
 		textAlign : "center"
 	});
 
-	//
-	// Lav ny Rute function
-	//
 	makeRouteButton.addEventListener('click', function(e) {
 		var app = require('ui/map');
 		new app(dashboardWindow).open();
 		dashboardWindow.close();
 	});
 
-	//
-	// menuIconView
-	//
 	var makeRouteIconView = Ti.UI.createView({
 		layout : 'horizontal',
 		height : '100%',
@@ -249,16 +243,10 @@ function dashboard() {
 	makeRouteIconView.add(makeRouteIcon);
 	navigation.add(makeRouteIconView);
 	navigation.add(makeRouteButton);
-	/*
-	 var statisticsIconView = Ti.UI.createView({
-	 layout:'horizontal',
-	 height:'100px',
-	 width:'10%',
-	 position: "fixed",
-	 backgroundColor: '#1b1c20',
-	 bottom: '0px'
-	 });
-	 */
+	
+	//
+	// Statistik over løberuter
+	//
 	var statisticsIcon = Titanium.UI.createImageView({
 		title : 'icon',
 		image : '/img/4.png',
@@ -267,23 +255,14 @@ function dashboard() {
 		height : '80px',
 		top : '10px'
 	});
-	/*
-	 var statisticsButton = Titanium.UI.createButton({
-	 title: 'STATESTIK',
-	 width: '40%',
-	 height: '100px',
-	 backgroundColor: '#1b1c20'
-	 });
-	 */
 
 	var statisticsButton = Titanium.UI.createButton({
 		title : 'STATESTIK',
-		//image: '/img/4.png',
 		layout : 'horizontal',
 		width : '50%',
 		height : '100%',
-		right : '0px',
-		bottom : '0px',
+		right : '0',
+		bottom : '0',
 		backgroundColor : '#0f0'
 	});
 

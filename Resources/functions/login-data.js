@@ -12,9 +12,6 @@ function getLogin (username, password, fromWindow) {
 	var xhr = Ti.Network.createHTTPClient({
 	   
 		onload: function() {
-			
-			console.log(this.status);
-			console.log(this.responseText);
 				
 			// if user and pass is true, then open dashboard window
 			if (this.status === 200) {

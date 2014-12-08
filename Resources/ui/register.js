@@ -200,42 +200,64 @@ function RegisterView() {
 		top: '20px'
 	});
 	
-	var maleBoxView = Ti.UI.createView ({
+	registerWin.add(genderBoxes);
+	
+	
+	//
+	// Male Box
+	//
+	var maleWrap = Ti.UI.createView ({
 		width: '50%'
+	});
+	
+	var maleBoxView = Ti.UI.createView ({
+		width: '50px',
+		backgroundColor: '#fff'
+		
 	});
 	
 	var maleBox = Ti.UI.createButton ({
-		height: '100%',
-		width: '50px',
-		borderWidth: '2px',
-		borderColor: '#000',
-		backgroundColor: '#fff',
-		value: 0
+		height: '40px',
+		width: '40px',
+		backgroundColor: '#fff'
+	});
+	
+	/*var maleBoxBtn = Ti.UI.createButton ({
+		height: '90%',
+		width: '90%',
+		backgroundColor: '#fff'
+	});*/
+	
+	genderBoxes.add(maleWrap);
+	maleWrap.add(maleBoxView);
+	maleBoxView.add(maleBox);
+	
+	//
+	// Female box
+	//
+	var femaleWrap = Ti.UI.createView ({
+		width: '50%'
 	});
 	
 	var femaleBoxView = Ti.UI.createView ({
-		width: '50%'
+		width: '50px',
+		backgroundColor: '#fff'
 	});	
 	
 	var femaleBox = Ti.UI.createButton ({
-		height: '100%',
-		width: '50px',
-		borderWidth: '2px',
-		borderColor: '#000',
-		backgroundColor: '#fff',
-		value: 0
+		height: '40px',
+		width: '40px',
+		backgroundColor: '#fff'
 	});
 	
-	registerWin.add(genderBoxes);
-	genderBoxes.add(maleBoxView);
-	maleBoxView.add(maleBox);
-	genderBoxes.add(femaleBoxView);
+	genderBoxes.add(femaleWrap);
+	femaleWrap.add(femaleBoxView);
 	femaleBoxView.add(femaleBox);
+	
 	
 	//
 	// add color switch on checkbox click
 	//
-	
 	var genderPicker = '1';
 	
 	maleBox.addEventListener('click', function(e) {
@@ -277,18 +299,17 @@ function RegisterView() {
 	
 	// Authenticate register
 	registerBtn.addEventListener('click', function(e) {
-		var needed = {
-		username: user.value,
-		password: pass.value,
-		email: email.value,
-		age: age.value,
-		weight: weight.value,
-		gender: genderPicker
-	};
+		
+		var registerValues = {
+			username: user.value,
+			password: pass.value,
+			email: email.value,
+			age: age.value,
+			weight: weight.value,
+			gender: genderPicker
+		};
 	
-		console.log(JSON.stringify(needed));
-	
-		var registerAuth = require('functions/register-user')(needed);
+		var registerAuth = require('functions/register-user')(registerValues);
 	});
 	
 	registerWin.add(registerBtn);

@@ -11,8 +11,6 @@ function registerUser (user) {
 	//http request starts
 	var xhr = Ti.Network.createHTTPClient({
 	    onload: function() {
-	    	console.log(this.status);
-	    	console.log(this.responseText);
 
 			// if all the information is okay, give feedback to user
 			if (this.status === 200) {	
