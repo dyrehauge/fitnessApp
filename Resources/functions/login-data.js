@@ -3,7 +3,7 @@
 // Directs the user to the dashboard, if the information given is correct
 //
 
-function getLogin (username, password) {
+function getLogin (username, password, fromWindow) {
 	
 	//api with user information
 	var url = "http://m452310y2012.mmd.eal.dk/drupal/api/user/login";
@@ -12,15 +12,19 @@ function getLogin (username, password) {
 	var xhr = Ti.Network.createHTTPClient({
 	   
 		onload: function() {
+			
+			console.log(this.status);
+			console.log(this.responseText);
 				
 			// if user and pass is true, then open dashboard window
 			if (this.status === 200) {
 				
 				// Require welcome-view.js and call the function
 			   	var dashwin = require('ui/dashboard');
+			   	fromWindow.close();
 			  	new dashwin().open();
 			  		
-				alert("Velkommen " + username);
+				//alert("Velkommen " + username);
 				
 			}
 			// else give error
@@ -30,12 +34,13 @@ function getLogin (username, password) {
 	   }
    });
 	
-	// send request to server, to check up username and password	   	
-	 xhr.open("POST", url);
-	 xhr.send({
-	 	"username": username,
-	 	"password": password
-	 });
+	// send request to server, to check up username and password
+    xhr.clearCookies(url);
+	xhr.open("POST", url);
+	xhr.send({
+ 	    "username": username,
+		"password": password
+	});
 	 
 } // ends getLogin function
 

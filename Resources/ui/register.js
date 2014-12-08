@@ -235,7 +235,11 @@ function RegisterView() {
 	//
 	// add color switch on checkbox click
 	//
+	
+	var genderPicker = '1';
+	
 	maleBox.addEventListener('click', function(e) {
+		//genderPicker = '1';
 		
 		if (maleBox.backgroundColor != '#000') {
 			maleBox.backgroundColor = '#000';
@@ -244,6 +248,7 @@ function RegisterView() {
 	});
 	
 	femaleBox.addEventListener('click', function(e) {
+		genderpicker = '0';
 		
 		if (femaleBox.backgroundColor != '#000') {
 			femaleBox.backgroundColor = '#000';
@@ -268,9 +273,22 @@ function RegisterView() {
 		}
 	});
 	
+	
+	
 	// Authenticate register
 	registerBtn.addEventListener('click', function(e) {
-		var registerAuth = require('functions/register-user')(user.value, pass.value, email.value);
+		var needed = {
+		username: user.value,
+		password: pass.value,
+		email: email.value,
+		age: age.value,
+		weight: weight.value,
+		gender: genderPicker
+	};
+	
+		console.log(JSON.stringify(needed));
+	
+		var registerAuth = require('functions/register-user')(needed);
 	});
 	
 	registerWin.add(registerBtn);
