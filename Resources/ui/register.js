@@ -139,6 +139,24 @@ function RegisterView() {
 	registerWin.add(weight);
 	
 	//
+	// Age field
+	//
+	var age = Ti.UI.createTextField ({
+		width:'70%',
+		height: '90px',
+		backgroundColor: '#fff',
+		borderColor: '#000',
+		borderWidth: '1px',
+		top: '20px',
+		hintText: 'Alder',
+ 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
+	});	
+	
+	registerWin.add(age);
+	
+	//
 	// Choose gender titles
 	//
 	var genderTitle = Ti.UI.createView ({
