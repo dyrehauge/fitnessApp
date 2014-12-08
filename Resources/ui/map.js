@@ -7,7 +7,8 @@ function mapWindow(prevWindow) {
 	// Map Window
 	var mapWindow = Titanium.UI.createWindow({
 	    backgroundColor: '#0ff',
-	    title: 'Map'
+	    title: 'Map',
+	    statusBarStyle: Ti.UI.iPhone.StatusBar.LIGHT_CONTENT
 	});
 	
 	// Navigation
@@ -23,7 +24,7 @@ function mapWindow(prevWindow) {
 		bottom: '13px'
 	}));
 	var backButton = Ti.UI.createLabel({
-		text: 'Back',
+		text: 'Stop',
 		color: '#fff',
 		left: '15px',
 		bottom: '13px'

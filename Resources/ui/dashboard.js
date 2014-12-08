@@ -8,7 +8,8 @@ function dashboard() {
 	var dashboardWindow = Titanium.UI.createWindow({
 		title : 'Dashboard',
 		backgroundImage : 'img/bg.jpg',
-		layout : 'vertical'
+		layout : 'vertical',
+		statusBarStyle: Ti.UI.iPhone.StatusBar.LIGHT_CONTENT
 	});
 
 	var header = Ti.UI.createView({
