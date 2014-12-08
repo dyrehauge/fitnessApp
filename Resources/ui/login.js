@@ -121,7 +121,7 @@ function LoginView() {
 	
 	// Authenticate login
 	loginBtn.addEventListener('click', function(e) {
-		var loginAuth = require('functions/login-data')(user.value, pass.value);
+		var loginAuth = require('functions/login-data')(user.value, pass.value, loginWin);
 	});
 	
 	loginWin.add(loginBtn);
