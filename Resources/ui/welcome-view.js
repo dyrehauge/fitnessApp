@@ -3,19 +3,18 @@
 // Directs the user to Login / Register / Facebook login
 //
 
-
 function WelcomeView() {
 	// this sets the background color of the master UIView (when there are no windows/tab groups on it)
 	Titanium.UI.setBackgroundColor('#000');
-	
-	
+
 	//
 	// create base UI and root window
 	//
 	var win1 = Titanium.UI.createWindow({  
 	    title:'Grid',
 	    backgroundImage: '/img/bg.jpg',
-	    layout: 'vertical'
+	    layout: 'vertical',
+	    statusBarStyle: Ti.UI.iPhone.StatusBar.LIGHT_CONTENT
 	});
 	
 	//
@@ -49,7 +48,7 @@ function WelcomeView() {
 		text: 'Velkommen til Rhino',
 		textAlign: 'center',
 		font: { 
-			fontSize:'25dp',
+			fontSize:'27dp',
 			fontWeight: 'bold'
 		}
 	});
@@ -81,7 +80,7 @@ function WelcomeView() {
 		textAlign: 'center',
 		color: '#fff',
 		font: { 
-			fontSize: '12dp'
+			fontSize: '15dp'
 		}
 	});
 	

@@ -20,9 +20,7 @@ function getLogin (username, password, fromWindow) {
 			   	var dashwin = require('ui/dashboard');
 			   	fromWindow.close();
 			  	new dashwin().open();
-			  		
-				//alert("Velkommen " + username);
-				
+	
 			}
 			// else give error
 			else {

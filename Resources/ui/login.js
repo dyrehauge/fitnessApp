@@ -13,7 +13,8 @@ function LoginView() {
 	var loginWin = Titanium.UI.createWindow({  
 	    title:'Grid',
 	    backgroundImage: '/img/bg.jpg',
-	    layout: 'vertical'
+	    layout: 'vertical',
+	    statusBarStyle: Ti.UI.iPhone.StatusBar.LIGHT_CONTENT
 	});
 	
 	//
