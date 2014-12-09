@@ -43,24 +43,23 @@ function mapWindow(prevWindow) {
 	    width: Ti.UI.FILL,
 		bottom: '0'
 	});
-	var backButton = Ti.UI.createButton({
-		title: 'Back',
+	var stopButton = Ti.UI.createButton({
+		title: 'Stop',
 		color: '#fff',
 		height: '100%',
 		left: '0',
-		width: 100 / 3 + '%'
+		width: 100 / 3 + '%',
+		enabled: trackingRunning
 	});
-	controlsView.add(backButton);
+	controlsView.add(title);
 	var startButton = Ti.UI.createButton({
 		title: 'Play',
 		backgroundColor: '#d5503d',
 		color: '#fff',
 		height: '100%',
 		left: 100 / 3 + '%',
-		width: 100 / 3 + '%'
-	});
-	startButton.addEventListener('click', function() {
-		trackingRunning = true;
+		width: 100 / 3 + '%',
+		enabled: !trackingRunning
 	});
 	controlsView.add(startButton);
 	var pauseButton = Ti.UI.createButton({
@@ -68,13 +67,21 @@ function mapWindow(prevWindow) {
 		color: '#fff',
 		height: '100%',
 		right: '0',
-		width: 100 / 3 + '%'
+		width: 100 / 3 + '%',
+		enabled: trackingRunning
+	});
+	controlsView.add(pauseButton);
+	mapWindow.add(controlsView);
+	
+	stopButton.addEventListener('click', function() {
+		trackingRunning = false;
+	});
+	startButton.addEventListener('click', function() {
+		trackingRunning = true;
 	});
 	pauseButton.addEventListener('click', function() {
 		trackingRunning = false;
 	});
-	controlsView.add(pauseButton);
-	mapWindow.add(controlsView);
 	
 	// Map
 	var Map = require('ti.map');
