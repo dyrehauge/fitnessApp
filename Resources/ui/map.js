@@ -48,8 +48,7 @@ function mapWindow(prevWindow) {
 		color: '#fff',
 		height: '100%',
 		left: '0',
-		width: 100 / 3 + '%',
-		enabled: trackingRunning
+		width: 100 / 3 + '%'
 	});
 	controlsView.add(title);
 	var startButton = Ti.UI.createButton({
@@ -58,8 +57,7 @@ function mapWindow(prevWindow) {
 		color: '#fff',
 		height: '100%',
 		left: 100 / 3 + '%',
-		width: 100 / 3 + '%',
-		enabled: !trackingRunning
+		width: 100 / 3 + '%'
 	});
 	controlsView.add(startButton);
 	var pauseButton = Ti.UI.createButton({
@@ -67,21 +65,36 @@ function mapWindow(prevWindow) {
 		color: '#fff',
 		height: '100%',
 		right: '0',
-		width: 100 / 3 + '%',
-		enabled: trackingRunning
+		width: 100 / 3 + '%'
 	});
 	controlsView.add(pauseButton);
 	mapWindow.add(controlsView);
 	
 	stopButton.addEventListener('click', function() {
 		trackingRunning = false;
+		updateButtons();
 	});
 	startButton.addEventListener('click', function() {
 		trackingRunning = true;
+		updateButtons();
 	});
 	pauseButton.addEventListener('click', function() {
 		trackingRunning = false;
+		updateButtons();
 	});
+	
+	(function updateButtons() {
+		if (trackingRunning) {
+			stopButton.touchEnabled = true;
+			startButton.touchEnabled = false;
+			pauseButton.touchEnabled = true;
+		}
+		else {
+			stopButton.touchEnabled = false;
+			startButton.touchEnabled = true;
+			pauseButton.touchEnabled = false;
+		}
+	})();
 	
 	// Map
 	var Map = require('ti.map');
