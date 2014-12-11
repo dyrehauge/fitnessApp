@@ -50,7 +50,7 @@ function mapWindow(prevWindow) {
 		left: '0',
 		width: 100 / 3 + '%'
 	});
-	controlsView.add(title);
+	controlsView.add(stopButton);
 	var startButton = Ti.UI.createButton({
 		title: 'Play',
 		backgroundColor: '#d5503d',
@@ -70,20 +70,7 @@ function mapWindow(prevWindow) {
 	controlsView.add(pauseButton);
 	mapWindow.add(controlsView);
 	
-	stopButton.addEventListener('click', function() {
-		trackingRunning = false;
-		updateButtons();
-	});
-	startButton.addEventListener('click', function() {
-		trackingRunning = true;
-		updateButtons();
-	});
-	pauseButton.addEventListener('click', function() {
-		trackingRunning = false;
-		updateButtons();
-	});
-	
-	(function updateButtons() {
+	var updateButtons = function() {
 		if (trackingRunning) {
 			stopButton.touchEnabled = true;
 			startButton.touchEnabled = false;
@@ -94,7 +81,33 @@ function mapWindow(prevWindow) {
 			startButton.touchEnabled = true;
 			pauseButton.touchEnabled = false;
 		}
-	})();
+	};
+	updateButtons();
+	
+	stopButton.addEventListener('click', function() {
+		var dialog = Ti.UI.createAlertDialog({
+		    cancel: 1,
+		    buttonNames: ['Stop, save route and go back', 'Cancel', 'Just stop'],
+			message: 'What would you like to do now?',
+			title: 'Stop'
+		});
+		
+		dialog.addEventListener('click', function(e) {
+			if (e.index === 0 || e.index === 2) {
+				trackingRunning = false;
+				updateButtons();
+			}
+		});
+		dialog.show();
+	});
+	startButton.addEventListener('click', function() {
+		trackingRunning = true;
+		updateButtons();
+	});
+	pauseButton.addEventListener('click', function() {
+		trackingRunning = false;
+		updateButtons();
+	});
 	
 	// Map
 	var Map = require('ti.map');
@@ -175,6 +188,31 @@ function mapWindow(prevWindow) {
 			route = null;
 		}
 	};
+	
+	function saveRoute() {
+		//http request starts
+		var xhr = Ti.Network.createHTTPClient({
+			onload: function() {
+				if (this.status === 200) {	
+					alert("Win!");
+				}
+				else {
+					alert("Error...");
+				}
+			}
+		});
+		 
+		//make array with values to push to the server
+		var route = JSON.stringify({
+		    "title": "TestTitle",
+		    "body": "TestBody"
+		});
+		
+		//send request to the server
+		xhr.open("POST", "http://m452310y2012.mmd.eal.dk/drupal/api/mapview/");
+		xhr.setRequestHeader("Content-Type","application/json");
+		xhr.send(route);
+	}
 	
 	mapWindow.add(mapview);
 
