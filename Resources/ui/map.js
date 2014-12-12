@@ -94,6 +94,7 @@ function mapWindow(prevWindow) {
 		
 		dialog.addEventListener('click', function(e) {
 			if (e.index === 0 || e.index === 2) {
+				if (e.index === 0) saveRoute();
 				trackingRunning = false;
 				updateButtons();
 			}
@@ -193,23 +194,32 @@ function mapWindow(prevWindow) {
 		//http request starts
 		var xhr = Ti.Network.createHTTPClient({
 			onload: function() {
-				if (this.status === 200) {	
+				if (this.status === 200) {
 					alert("Win!");
 				}
 				else {
 					alert("Error...");
 				}
+				console.log(this.responseText);
 			}
 		});
 		 
 		//make array with values to push to the server
 		var route = JSON.stringify({
+			"type": "mapview",
 		    "title": "TestTitle",
-		    "body": "TestBody"
+		    "body":{
+				"und":[{
+					"value": JSON.stringify(mapRoute)
+				}]
+			}
 		});
+		console.log(mapRoute);
+		console.log(route);
 		
 		//send request to the server
-		xhr.open("POST", "http://m452310y2012.mmd.eal.dk/drupal/api/mapview/");
+		xhr.clearCookies("http://m452310y2012.mmd.eal.dk/drupal/api/node/");
+		xhr.open("POST", "http://m452310y2012.mmd.eal.dk/drupal/api/node/");
 		xhr.setRequestHeader("Content-Type","application/json");
 		xhr.send(route);
 	}
