@@ -1,4 +1,5 @@
 function mapWindow(prevWindow) {
+	var route;
 	mapRoute = [];
 	trackingRunning = false;
 	
@@ -87,14 +88,15 @@ function mapWindow(prevWindow) {
 	stopButton.addEventListener('click', function() {
 		var dialog = Ti.UI.createAlertDialog({
 		    cancel: 1,
-		    buttonNames: ['Stop, save route and go back', 'Cancel', 'Just stop'],
+		    buttonNames: ['Stop, save route and go back', 'Cancel', 'Just stop', 'Stop and Reset'],
 			message: 'What would you like to do now?',
 			title: 'Stop'
 		});
 		
 		dialog.addEventListener('click', function(e) {
-			if (e.index === 0 || e.index === 2) {
+			if (e.index !== 1) {
 				if (e.index === 0) saveRoute();
+				if (e.index === 3) {mapview.removeRoute(route); mapRoute = [];}
 				trackingRunning = false;
 				updateButtons();
 			}
@@ -156,8 +158,7 @@ function mapWindow(prevWindow) {
 		            latitudeDelta:0.001,
 		            longitudeDelta:0.001
 		        };
-		        
-				
+
 				// add location to global route
 				mapRoute.push({'latitude':latitude, 'longitude':longitude});
 			}
@@ -165,13 +166,12 @@ function mapWindow(prevWindow) {
 		
         updateRoute();
 	};
-	
-	var route;
-	
+
 	// add route to map
 	function updateRoute() {
 		// check if we have any points
 		if (mapRoute.length) {
+			if (route) mapview.removeRoute(route);
 			// create our route using our list of points
 			route = Map.createRoute({
 				name: "routePoint",
@@ -181,7 +181,6 @@ function mapWindow(prevWindow) {
 			});
 			
 			// add route to map
-			mapview.removeRoute(route);
 			mapview.addRoute(route);
 		}
 		else if (route) {
