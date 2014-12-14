@@ -53,7 +53,7 @@ function mapWindow(prevWindow) {
 	});
 	controlsView.add(stopButton);
 	var startButton = Ti.UI.createButton({
-		title: 'Play',
+		title: trackingRunning ? 'Pause' : 'Play',
 		backgroundColor: '#d5503d',
 		color: '#fff',
 		height: '100%',
@@ -62,7 +62,7 @@ function mapWindow(prevWindow) {
 	});
 	controlsView.add(startButton);
 	var pauseButton = Ti.UI.createButton({
-		title: 'Pause',
+		title: '???',
 		color: '#fff',
 		height: '100%',
 		right: '0',
@@ -74,14 +74,16 @@ function mapWindow(prevWindow) {
 	var updateButtons = function() {
 		if (trackingRunning) {
 			stopButton.touchEnabled = true;
-			startButton.touchEnabled = false;
-			pauseButton.touchEnabled = true;
+			//startButton.touchEnabled = false;
+			//pauseButton.touchEnabled = true;
 		}
 		else {
 			stopButton.touchEnabled = false;
-			startButton.touchEnabled = true;
-			pauseButton.touchEnabled = false;
+			//startButton.touchEnabled = true;
+			//pauseButton.touchEnabled = false;
 		}
+		
+		startButton.title = trackingRunning ? 'Pause' : 'Play';
 	};
 	updateButtons();
 	
@@ -104,12 +106,12 @@ function mapWindow(prevWindow) {
 		dialog.show();
 	});
 	startButton.addEventListener('click', function() {
-		trackingRunning = true;
+		trackingRunning = !trackingRunning;
 		updateButtons();
 	});
 	pauseButton.addEventListener('click', function() {
-		trackingRunning = false;
-		updateButtons();
+		//trackingRunning = false;
+		//updateButtons();
 	});
 	
 	// Map
