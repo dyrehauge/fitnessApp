@@ -18,7 +18,7 @@ function routes(prevWindow) {
 	    width: Ti.UI.FILL
 	});
 	navView.add(Ti.UI.createLabel({
-		text: 'Map',
+		text: 'Routes',
 		color: '#fff',
 		bottom: '13px'
 	}));
@@ -53,17 +53,34 @@ function routes(prevWindow) {
 	}
 
 	function showRoutes(routes) {
-		console.log(routes);
-
-		for (var i = 0; i < routes.length; i++) {
-			var newView = Ti.UI.createView({
+		var i, newView, label;
+		for (i = 0; i < routes.length; i++) {
+			newView = Ti.UI.createView({
 				backgroundColor: '#80ffffff',
-				height: '100px'
+				height: '100px',
+				_route: routes[i]
 			});
-			var label = Ti.UI.createLabel({
+
+			label = Ti.UI.createLabel({
 				text: routes[i].node_title
 			});
 			newView.add(label);
+
+			newView.addEventListener('click', function(e) {
+				try {
+					var json = this._route;
+					json.Body = JSON.parse((json.Body).replace(/&quot;/g,'"'));
+
+					var app = require('ui/route');
+					new app(routesWindow, json).open();
+					routesWindow.close();
+				}
+				catch(error) {
+					alert('No route found');
+				}
+				
+			});
+
 			routesWindow.add(newView);
 		}
 	}

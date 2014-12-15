@@ -1,8 +1,6 @@
-function mapWindow(prevWindow) {
-	var route;
+function routeWindow(prevWindow, route) {
 	var time;
 	var pauseTime = 0;
-	mapRoute = [];
 	trackingRunning = false;
 	
 	var self = this;
@@ -80,7 +78,7 @@ function mapWindow(prevWindow) {
 		
 		startButton.title = trackingRunning ? 'Pause' : 'Play';
 
-		if (trackingRunning && !mapRoute.length) time = Date.now();
+		if (trackingRunning) time = Date.now();
 	};
 	updateButtons();
 	
@@ -89,7 +87,7 @@ function mapWindow(prevWindow) {
 	}, 1000);
 	
 	function updateTime() {
-		if (!trackingRunning && mapRoute.length) pauseTime += 1000;
+		if (!trackingRunning) pauseTime += 1000;
 		
 		if (time) {
 			var timeSec = Math.floor((Date.now() - time - pauseTime) / 1000);
@@ -112,15 +110,13 @@ function mapWindow(prevWindow) {
 	stopButton.addEventListener('click', function() {
 		var dialog = Ti.UI.createAlertDialog({
 		    cancel: 1,
-		    buttonNames: ['Stop, save route and go back', 'Cancel', 'Just stop', 'Stop and Reset'],
+		    buttonNames: ['Cancel', 'Stop'],
 			message: 'What would you like to do now?',
 			title: 'Stop'
 		});
 		
 		dialog.addEventListener('click', function(e) {
-			if (e.index !== 1) {
-				if (e.index === 0) saveRoute();
-				if (e.index === 3) {mapview.removeRoute(route); mapRoute = [];}
+			if (e.index !== 0) {
 				trackingRunning = false;
 				updateButtons();
 			}
@@ -144,27 +140,37 @@ function mapWindow(prevWindow) {
 		top: '9%',
 		bottom: '12.5%'
 	});
-	
+
+	var tiRoute = Map.createRoute({
+		name: "routePoint",
+		points: route.Body,
+		color: "red",
+		width: 4
+	});
+
+	// add route to map
+	mapview.addRoute(tiRoute);
+
+	var complete = false;
 	// listen for completion of map view load (first time map is open)
 	mapview.addEventListener('complete', function() {
 		// get current location at load
-		Titanium.Geolocation.getCurrentPosition(function(e) {	
-			var latitude = e.coords.latitude;
-			var longitude = e.coords.longitude;
-		
-			// set map to center on current location
-			mapview.region = {
-	            latitude:latitude, longitude:longitude,
-	            latitudeDelta:0.001, longitudeDelta:0.001
-	        };
-		});
+		if (!complete) {
+			Titanium.Geolocation.getCurrentPosition(function(e) {	
+				var latitude = e.coords.latitude;
+				var longitude = e.coords.longitude;
+			
+				// set map to center on current location
+				mapview.region = {
+		            latitude:latitude, longitude:longitude,
+		            latitudeDelta:0.001, longitudeDelta:0.001
+		        };
+			});
+		}
 	});
 	
 	// run addRoute function everytime location changes
 	Ti.Geolocation.addEventListener('location', locationChanged);
-	
-	// run addRoute function when window is in focus
-	mapWindow.addEventListener('focus', updateRoute);
 	
 	function locationChanged(e) {
 		if (trackingRunning) {
@@ -178,79 +184,13 @@ function mapWindow(prevWindow) {
 		            latitudeDelta:0.001,
 		            longitudeDelta:0.001
 		        };
-
-				// add location to global route
-				mapRoute.push({'latitude':latitude, 'longitude':longitude});
 			}
 		}
-		
-        updateRoute();
 	};
 
-	// add route to map
-	function updateRoute() {
-		// check if we have any points
-		if (mapRoute.length) {
-			if (route) mapview.removeRoute(route);
-			// create our route using our list of points
-			route = Map.createRoute({
-				name: "routePoint",
-				points: mapRoute,
-				color: "red",
-				width: 4
-			});
-			
-			// add route to map
-			mapview.addRoute(route);
-		}
-		else if (route) {
-			mapview.removeRoute(route);
-			route = null;
-		}
-	};
-	
-	function saveRoute() {
-		var url = "http://m452310y2012.mmd.eal.dk/drupal/api/node/";
-
-		//http request starts
-		var xhr = Ti.Network.createHTTPClient({
-			onload: function() {
-				if (this.status === 200) {
-					alert("Win!");
-				}
-				else {
-					alert("Error...");
-				}
-				console.log(this.responseText);
-			}
-		});
-		 
-		//make array with values to push to the server
-		var route = JSON.stringify({
-			"type": "mapview",
-		    "title": "TestTitle",
-		    "field_time": {
-		    	"und": [{
-		    		"value": Date.now() - time - pauseTime
-		    	}]
-		    },
-		    "body": {
-				"und": [{
-					"value": JSON.stringify(mapRoute)
-				}]
-			}
-		});
-
-		//send request to the server
-		xhr.clearCookies(url);
-		xhr.open("POST", url);
-		xhr.setRequestHeader("Content-Type","application/json");
-		xhr.send(route);
-	}
-	
 	mapWindow.add(mapview);
 
 	return mapWindow;
 }
 
-module.exports = mapWindow;
+module.exports = routeWindow;
