@@ -1,5 +1,7 @@
 function mapWindow(prevWindow) {
 	var route;
+	var time;
+	var pauseTime = 0;
 	mapRoute = [];
 	trackingRunning = false;
 	
@@ -61,32 +63,52 @@ function mapWindow(prevWindow) {
 		width: 100 / 3 + '%'
 	});
 	controlsView.add(startButton);
-	var pauseButton = Ti.UI.createButton({
-		title: '???',
+	var timeLabel = Ti.UI.createLabel({
+		text: '00:00',
 		color: '#fff',
 		height: '100%',
 		right: '0',
-		width: 100 / 3 + '%'
+		width: 100 / 3 + '%',
+		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
 	});
-	controlsView.add(pauseButton);
+	controlsView.add(timeLabel);
 	mapWindow.add(controlsView);
 	
 	var updateButtons = function() {
-		if (trackingRunning) {
-			stopButton.touchEnabled = true;
-			//startButton.touchEnabled = false;
-			//pauseButton.touchEnabled = true;
-		}
-		else {
-			stopButton.touchEnabled = false;
-			//startButton.touchEnabled = true;
-			//pauseButton.touchEnabled = false;
-		}
+		stopButton.touchEnabled = trackingRunning;
+		//startButton.touchEnabled = !trackingRunning;
 		
 		startButton.title = trackingRunning ? 'Pause' : 'Play';
+
+		if (trackingRunning && !mapRoute.length) time = Date.now();
 	};
 	updateButtons();
 	
+	setInterval(function() {
+		updateTime();
+	}, 1000);
+	
+	function updateTime() {
+		if (!trackingRunning && mapRoute.length) pauseTime += 1000;
+		
+		if (time) {
+			var timeSec = Math.floor((Date.now() - time - pauseTime) / 1000);
+			var sec = addZero(timeSec % 60);
+			var min = addZero(Math.floor(timeSec / 60));
+			timeLabel.text = min + ':' + sec;
+		}
+	}
+	
+	function addZero(x) {
+		if(x >= 0 && x < 10) {
+			return '0' + x;
+		} else if(x < 0 && x > -10) {
+			return '-0' + Math.abs(x);
+		} else {
+			return x;
+		}
+	};
+
 	stopButton.addEventListener('click', function() {
 		var dialog = Ti.UI.createAlertDialog({
 		    cancel: 1,
@@ -108,10 +130,6 @@ function mapWindow(prevWindow) {
 	startButton.addEventListener('click', function() {
 		trackingRunning = !trackingRunning;
 		updateButtons();
-	});
-	pauseButton.addEventListener('click', function() {
-		//trackingRunning = false;
-		//updateButtons();
 	});
 	
 	// Map
@@ -209,8 +227,13 @@ function mapWindow(prevWindow) {
 		var route = JSON.stringify({
 			"type": "mapview",
 		    "title": "TestTitle",
-		    "body":{
-				"und":[{
+		    "field_time": {
+		    	"und": [{
+		    		"value": Date.now() - time - pauseTime
+		    	}]
+		    },
+		    "body": {
+				"und": [{
 					"value": JSON.stringify(mapRoute)
 				}]
 			}
