@@ -131,7 +131,9 @@ function dashboard() {
 	});
 
 	button.addEventListener('click', function(e) {
-		alert("You clicked the button hihi");
+		var app = require('ui/routes');
+		new app(dashboardWindow).open();
+		dashboardWindow.close();
 	});
 
 	dashboardWindow.add(chooserouteview);
