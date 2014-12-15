@@ -16,6 +16,6 @@
 
 // initialize the welcome screen
 (function() {
-	var app = require('ui/welcome-view');
+	var app = require('ui/dashboard');
 	new app().open();
 })();

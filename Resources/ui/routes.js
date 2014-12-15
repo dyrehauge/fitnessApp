@@ -34,9 +34,41 @@ function routes(prevWindow) {
 	});
 	navView.add(backButton);
 	routesWindow.add(navView);
+	
+	function getRoutes() {
+		//api to server
+		var url = "http://m452310y2012.mmd.eal.dk/drupal/api/mapview/";
+		
+		//http request starts
+		var xhr = Ti.Network.createHTTPClient({
+		    onload: function() {
+		    	showRoutes(JSON.parse(this.responseText));
+		   }
+		 });
+		
+		//send request to the server
+		xhr.clearCookies(url);
+		xhr.open("GET", url);
+		xhr.send();
+	}
 
+	function showRoutes(routes) {
+		console.log(routes);
 
-
+		for (var i = 0; i < routes.length; i++) {
+			var newView = Ti.UI.createView({
+				backgroundColor: '#80ffffff',
+				height: '100px'
+			});
+			var label = Ti.UI.createLabel({
+				text: routes[i].node_title
+			});
+			newView.add(label);
+			routesWindow.add(newView);
+		}
+	}
+	
+	getRoutes();
 
 	return routesWindow;
 };
