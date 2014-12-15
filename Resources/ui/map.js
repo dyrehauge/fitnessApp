@@ -9,7 +9,7 @@ function mapWindow(prevWindow) {
 	var mapWindow = Titanium.UI.createWindow({
 	    backgroundColor: '#0ff',
 	    title: 'Map',
-	    statusBarStyle: Ti.UI.iPhone.StatusBar.LIGHT_CONTENT
+	    statusBarStyle: Ti.Platform.osname == "iphone" ? Ti.UI.iPhone.StatusBar.LIGHT_CONTENT : null
 	});
 	
 	// Navigation

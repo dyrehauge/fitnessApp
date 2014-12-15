@@ -14,14 +14,14 @@ function RegisterView() {
 	    title:'Grid',
 	    backgroundImage: '/img/bg.jpg',
 	    layout: 'vertical',
-	    statusBarStyle: Ti.UI.iPhone.StatusBar.LIGHT_CONTENT
-	});
+	    statusBarStyle: Ti.Platform.osname == "iphone" ? Ti.UI.iPhone.StatusBar.LIGHT_CONTENT : null
+	}); 
 	
 	//
 	// Topbar view
 	//
 	var topBar = Ti.UI.createView ({
-		height:'10%',
+		height:'9%',
 		width: '100%',
 		backgroundColor: '#d95b44'
 	});
@@ -31,6 +31,7 @@ function RegisterView() {
 		left: '0',
 		top: '20px',
 		width: '20%',
+		backgroundColor: 'transparent',
 		height: '100%',
 		color: '#fff',
 		font: {
@@ -71,6 +72,7 @@ function RegisterView() {
 	var user = Ti.UI.createTextField ({
 		width:'70%',
 		height: '90px',
+		color: '#000',
 		backgroundColor: '#fff',
 		borderColor: '#000',
 		borderWidth: '1px',
@@ -91,6 +93,7 @@ function RegisterView() {
 		height: '90px',
 		backgroundColor: '#fff',
 		borderColor: '#000',
+		color: '#000',
 		borderWidth: '1px',
 		top: '20px',
 		hintText: 'Adgangskode',
@@ -110,6 +113,7 @@ function RegisterView() {
 		width:'70%',
 		height: '90px',
 		backgroundColor: '#fff',
+		color: '#000',
 		borderColor: '#000',
 		borderWidth: '1px',
 		top: '20px',
@@ -127,6 +131,7 @@ function RegisterView() {
 	var weight = Ti.UI.createTextField ({
 		width:'70%',
 		height: '90px',
+		color: '#000',
 		backgroundColor: '#fff',
 		borderColor: '#000',
 		borderWidth: '1px',
@@ -145,6 +150,7 @@ function RegisterView() {
 	var age = Ti.UI.createTextField ({
 		width:'70%',
 		height: '90px',
+		color: '#000',
 		backgroundColor: '#fff',
 		borderColor: '#000',
 		borderWidth: '1px',
