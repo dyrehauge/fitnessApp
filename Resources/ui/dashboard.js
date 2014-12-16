@@ -26,7 +26,7 @@ function dashboard() {
 		textAlign : 'center',
 		top : '20',
 		font : {
-			fontSize : '20%',
+			fontSize : '27dp',
 			fontWeight : 'light'
 		}
 	});
@@ -66,7 +66,7 @@ function dashboard() {
 		text : 'VELKOMMEN',
 		textAlign : 'center',
 		font : {
-			fontSize : '30%',
+			fontSize : '27dp',
 			fontWeight : 'light'
 		}
 	});
@@ -122,6 +122,7 @@ function dashboard() {
 		height : "100%",
 		width : "85%",
 		textAlign : 'center',
+		color: "#fff",
 		title : 'VÆLG RUTE',
 		backgroundColor : '#d95b44',
 		font : {
@@ -196,14 +197,16 @@ function dashboard() {
 		height : '100%',
 		backgroundColor : '#d95b44',
 		title : "LAV NY RUTE",
+		color: "#fff",
 		textAlign : "center"
 	});
 
 	makeRouteButton.addEventListener('click', function(e) {
-		var app = require('ui/map');
-		new app(dashboardWindow).open();
+		var map = require('ui/map');
+		new map().open();
 		dashboardWindow.close();
 	});
+	
 
 	var makeRouteIconView = Ti.UI.createView({
 		layout : 'horizontal',
@@ -229,26 +232,37 @@ function dashboard() {
 	//
 	// Statistik over løberuter
 	//
+	var statisticsIconView = Ti.UI.createView({
+		layout : 'horizontal',
+		height : '100%',
+		backgroundColor : '#1b1c20',
+		width : '10%'
+	});
+
+	
 	var statisticsIcon = Titanium.UI.createImageView({
 		title : 'icon',
 		image : '/img/analysis.png',
 		left : "20%",
 		width : '80px',
 		height : '80px',
-		top : '10px'
+		top : '25%'
 	});
 
 
 	var statisticsButton = Titanium.UI.createButton({
 		title : 'STATESTIK',
 		layout : 'horizontal',
-		width : '50%',
+		width : '40%',
+		color: "#fff",
 		height : '100%',
 		right : '0',
 		bottom : '0',
 		backgroundColor : '#1b1c20'
 	});
 
+	navigation.add(statisticsIconView);
+	statisticsIconView.add(statisticsIcon);
 	navigation.add(statisticsButton);
 	statisticsButton.add(statisticsIcon);
 
