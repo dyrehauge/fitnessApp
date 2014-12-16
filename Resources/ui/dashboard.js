@@ -203,7 +203,7 @@ function dashboard() {
 
 	makeRouteButton.addEventListener('click', function(e) {
 		var map = require('ui/map');
-		new map().open();
+		new map(dashboardWindow).open();
 		dashboardWindow.close();
 	});
 	
