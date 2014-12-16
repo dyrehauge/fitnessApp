@@ -18,8 +18,8 @@ function getLogin (username, password, fromWindow) {
 				
 				// Require welcome-view.js and call the function
 			   	var dashwin = require('ui/dashboard');
-			   	fromWindow.close();
 			  	new dashwin().open();
+			  	fromWindow.close();
 	
 			}
 			// else give error
