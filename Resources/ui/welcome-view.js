@@ -14,7 +14,7 @@ function WelcomeView() {
 	    title:'Grid',
 	    backgroundImage: '/img/bg.jpg',
 	    layout: 'vertical',
-	    statusBarStyle: Ti.UI.iPhone.StatusBar.LIGHT_CONTENT
+	    statusBarStyle: Ti.Platform.osname == "iphone" ? Ti.UI.iPhone.StatusBar.LIGHT_CONTENT : null
 	});
 	
 	//
@@ -100,7 +100,8 @@ function WelcomeView() {
 	var login = Ti.UI.createButton ({
 		title: 'Log ind',
 		color: '#fff',
-		width:'49,75%',
+		width:'46%',
+		backgroundColor: 'transparent',
 		textAlign: 'center',
 		font: {
 			fontWeight: 'bold',
@@ -128,7 +129,8 @@ function WelcomeView() {
 	var register = Ti.UI.createButton ({
 		title: 'Register',
 		color: '#fff',
-		width: '49.75%',
+		width: '46%',
+		backgroundColor: 'transparent',
 		textAlign: 'center',
 		font: {
 			fontWeight: 'bold',
@@ -178,6 +180,7 @@ function WelcomeView() {
 	var facebook = Ti.UI.createButton ({
 		width:'85%',
 		height: '100%',
+		backgroundColor: 'transparent',
 		title: 'Log ind med Facebook',
 		textAlign: 'center',
 		color: '#fff',

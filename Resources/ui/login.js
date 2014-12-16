@@ -14,14 +14,14 @@ function LoginView() {
 	    title:'Grid',
 	    backgroundImage: '/img/bg.jpg',
 	    layout: 'vertical',
-	    statusBarStyle: Ti.UI.iPhone.StatusBar.LIGHT_CONTENT
+	    statusBarStyle: Ti.Platform.osname == "iphone" ? Ti.UI.iPhone.StatusBar.LIGHT_CONTENT : null
 	});
 	
 	//
 	// Topbar view
 	//
 	var topBar = Ti.UI.createView ({
-		height:'10%',
+		height:'9%',
 		width: '100%',
 		backgroundColor: '#d95b44'
 	});
@@ -32,6 +32,7 @@ function LoginView() {
 		top: '20px',
 		width: '20%',
 		height: '100%',
+		backgroundColor: 'transparent',
 		color: '#fff',
 		font: {
 			fontSize: '16dp',
@@ -76,6 +77,7 @@ function LoginView() {
 		borderColor: '#000',
 		borderWidth: '1px',
 		top: '50px',
+		color: '#000',
 		hintText: 'Brugernavn',
 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
     	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
@@ -91,6 +93,7 @@ function LoginView() {
 		width:'70%',
 		height: '90px',
 		backgroundColor: '#fff',
+		color: '#000',
 		borderColor: '#000',
 		borderWidth: '1px',
 		top: '20px',
@@ -132,6 +135,7 @@ function LoginView() {
 	//
 	var forgotten = Ti.UI.createButton ({
 		color: '#fff',
+		backgroundColor: 'transparent',
 		title: 'Glemt adgangskode?',
 		top: '20px'
 	});

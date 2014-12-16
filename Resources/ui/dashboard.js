@@ -9,7 +9,7 @@ function dashboard() {
 		title : 'Dashboard',
 		backgroundImage : 'img/bg.jpg',
 		layout : 'vertical',
-		statusBarStyle: Ti.UI.iPhone.StatusBar.LIGHT_CONTENT
+		statusBarStyle: Ti.Platform.osname == "iphone" ? Ti.UI.iPhone.StatusBar.LIGHT_CONTENT : null
 	});
 
 	var header = Ti.UI.createView({
@@ -76,7 +76,7 @@ function dashboard() {
 		text : 'JESPER M.',
 		textAlign : 'center',
 		font : {
-			fontSize : '30%',
+			fontSize : '50%',
 			fontWeight : 'light'
 		}
 	});
@@ -86,7 +86,7 @@ function dashboard() {
 	titleView.add(titleUser);
 
 	//
-	// Breaker
+	// Space 10% height
 	//
 	var breaker = Ti.UI.createView({
 		width : '100%',
@@ -96,7 +96,7 @@ function dashboard() {
 	dashboardWindow.add(breaker);
 
 	//
-	// Button
+	// Button VÆLG RUTE
 	//
 	var chooserouteview = Ti.UI.createView({
 		width : '50%',
@@ -112,9 +112,9 @@ function dashboard() {
 
 	var mapIconimg = Ti.UI.createImageView({
 		backgroundImage : "/img/map.png",
-		width : '25px',
-		height : '25px',
-		top : '33.3%',
+		width : '35px',
+		height : '35px',
+		top : '35%',
 		left : "30%"
 	});
 
@@ -125,7 +125,7 @@ function dashboard() {
 		title : 'VÆLG RUTE',
 		backgroundColor : '#d95b44',
 		font : {
-			fontSize : '15dp',
+			fontSize : '20%',
 			fontFamily : "Helvetica-Light"
 		}
 	});
@@ -143,30 +143,11 @@ function dashboard() {
 
 	var breaker3 = Ti.UI.createView({
 		width : '100%',
-		height : '5%'
+		height : '25%'
 	});
 
 	dashboardWindow.add(breaker3);
 	
-	//
-	// Last saved statistics
-	//
-	var simplelabel = Ti.UI.createLabel({
-		color : '#fff',
-		top : 50,
-		font : {
-			fontSize : 25,
-			fontFamily : "Helvetica-Light"
-		},
-		text : 'SIDSTE LØB',
-		textAlign : 'center',
-		font : {
-			fontSize : '18px',
-			fontWeight : 'light'
-		}
-	});
-
-	dashboardWindow.add(simplelabel);
 
 	var row = Ti.UI.createView({
 		layout : 'horizontal',
@@ -203,7 +184,7 @@ function dashboard() {
 	//
 	var navigation = Ti.UI.createView({
 		layout : 'horizontal',
-		height : '200px',
+		height : '150px',
 		width : '100%',
 		bottom : '0',
 		position: 'fixed'
@@ -237,9 +218,9 @@ function dashboard() {
 		title : 'icon',
 		image : '/img/plus.png',
 		left : "20%",
-		width : '30px',
-		height : '30px',
-		top : '35px'
+		width : '35px',
+		height : '35px',
+		top : '40%'
 	});
 
 	dashboardWindow.add(navigation);
@@ -252,12 +233,13 @@ function dashboard() {
 	//
 	var statisticsIcon = Titanium.UI.createImageView({
 		title : 'icon',
-		image : '/img/4.png',
+		image : '/img/analysis.png',
 		left : "20%",
 		width : '80px',
 		height : '80px',
 		top : '10px'
 	});
+
 
 	var statisticsButton = Titanium.UI.createButton({
 		title : 'STATESTIK',
@@ -266,7 +248,7 @@ function dashboard() {
 		height : '100%',
 		right : '0',
 		bottom : '0',
-		backgroundColor : '#0f0'
+		backgroundColor : '#1b1c20'
 	});
 
 	navigation.add(statisticsButton);
