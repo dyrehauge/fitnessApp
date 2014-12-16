@@ -62,7 +62,7 @@ function routes(prevWindow) {
 			});
 
 			label = Ti.UI.createLabel({
-				text: routes[i].node_title
+				text: 'Time: ' + routes[i].time + ' Dist: ' + routes[i].dist
 			});
 			newView.add(label);
 

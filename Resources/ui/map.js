@@ -1,7 +1,9 @@
 function mapWindow(prevWindow) {
 	var route;
 	var time;
+	var distance = 0;
 	var pauseTime = 0;
+	var prevLoc = {};
 	mapRoute = [];
 	trackingRunning = false;
 	
@@ -129,6 +131,7 @@ function mapWindow(prevWindow) {
 	});
 	startButton.addEventListener('click', function() {
 		trackingRunning = !trackingRunning;
+		//if (!trackingRunning) prevLoc = {};
 		updateButtons();
 	});
 	
@@ -138,9 +141,9 @@ function mapWindow(prevWindow) {
 	// create mapview
 	var mapview = Map.createView({
 		mapType: Map.NORMAL_TYPE,
-		animate:true,
-		regionFit:true,
-		userLocation:true,
+		animate: true,
+		regionFit: true,
+		userLocation: true,
 		top: '9%',
 		bottom: '12.5%'
 	});
@@ -181,6 +184,16 @@ function mapWindow(prevWindow) {
 
 				// add location to global route
 				mapRoute.push({'latitude':latitude, 'longitude':longitude});
+				
+				if (prevLoc.lat) {
+					distance += parseInt(dist(prevLoc.lat, prevLoc.long, latitude, longitude) * 1000);
+					console.log(distance);
+				}
+				
+				prevLoc = {
+					"lat": latitude,
+					"long": longitude
+				};
 			}
 		}
 		
@@ -234,6 +247,11 @@ function mapWindow(prevWindow) {
 		    		"value": Date.now() - time - pauseTime
 		    	}]
 		    },
+		    "field_dist": {
+		    	"und": [{
+		    		"value": distance
+		    	}]
+		    },
 		    "body": {
 				"und": [{
 					"value": JSON.stringify(mapRoute)
@@ -249,6 +267,24 @@ function mapWindow(prevWindow) {
 	}
 	
 	mapWindow.add(mapview);
+
+	// Haversine
+    function dist(lat1, lon1, lat2, lon2) {
+    	var dLat = degToRad(lat2-lat1);
+    	var dLon = degToRad(lon2-lon1);
+
+		var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2));
+
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+		return 6371 * c;
+    }
+
+    function degToRad(val) {
+        return val * Math.PI / 180;
+    }
+
 
 	return mapWindow;
 }
