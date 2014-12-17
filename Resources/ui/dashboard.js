@@ -1,4 +1,4 @@
-function dashboard() {
+function dashboard(username, uid) {
 	// this sets the background color of the master UIView (when there are no windows/tab groups on it)
 	Titanium.UI.setBackgroundColor('#000');
 
@@ -30,13 +30,22 @@ function dashboard() {
 			fontWeight : 'light'
 		}
 	});
-
+	
+	//
+	// User settings
+	//
 	var settingsicon = Ti.UI.createImageView({
 		width : '25px',
 		height : '25px',
 		image : '/img/settings.png',
 		right : '20',
 		top : '-25'
+	});
+	
+	settingsicon.addEventListener('click', function(e) {
+		var userSet = require('ui/user-settings');
+		new userSet(dashboardWindow, uid).open();
+		dashboardWindow.close();
 	});
 
 	dashboardWindow.add(header);
@@ -63,7 +72,7 @@ function dashboard() {
 	var title = Ti.UI.createLabel({
 		color : '#fff',
 		top : "10%",
-		text : 'VELKOMMEN',
+		text : 'VELKOMMEN ' + username,
 		textAlign : 'center',
 		font : {
 			fontSize : '27dp',
@@ -71,19 +80,8 @@ function dashboard() {
 		}
 	});
 
-	var titleUser = Ti.UI.createLabel({
-		color : '#fff',
-		text : 'JESPER M.',
-		textAlign : 'center',
-		font : {
-			fontSize : '50%',
-			fontWeight : 'light'
-		}
-	});
-
 	dashboardWindow.add(titleView);
 	titleView.add(title);
-	titleView.add(titleUser);
 
 	//
 	// Space 10% height

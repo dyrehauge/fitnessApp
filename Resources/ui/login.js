@@ -16,7 +16,7 @@ function LoginView() {
 	    layout: 'vertical',
 	    statusBarStyle: Ti.Platform.osname == "iphone" ? Ti.UI.iPhone.StatusBar.LIGHT_CONTENT : null
 	});
-	
+
 	//
 	// Topbar view
 	//

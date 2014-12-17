@@ -15,12 +15,30 @@ function getLogin (username, password, fromWindow) {
 				
 			// if user and pass is true, then open dashboard window
 			if (this.status === 200) {
+				// currentuser
+				var user = 'http://m452310y2012.mmd.eal.dk/drupal/api/system/connect';
 				
-				// Require welcome-view.js and call the function
-			   	var dashwin = require('ui/dashboard');
-			  	new dashwin().open();
-			  	fromWindow.close();
-	
+				var tokenFunction = require('functions/get-current-user');
+				
+				tokenFunction(function(token) {
+					var xhr = Ti.Network.createHTTPClient ({
+						onload : function(){
+							var currentUser = JSON.parse(this.responseText);
+							var uid = currentUser.user.uid;
+							
+							// Require welcome-view.js and call the function
+						   	var dashwin = require('ui/dashboard');
+						   	fromWindow.close();
+						  	new dashwin(username, uid).open();
+						}
+					});
+					
+					//send token - recieve current user as response
+					xhr.open('POST', user);
+					xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+					xhr.setRequestHeader("X-CSRF-Token", token);
+					xhr.send();
+				});
 			}
 			// else give error
 			else {
