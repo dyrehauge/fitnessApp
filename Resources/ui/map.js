@@ -144,7 +144,7 @@ function mapWindow(prevWindow) {
 	
 	// run addRoute function everytime location changes
 	Ti.Geolocation.addEventListener('location', locationChanged);
-	
+
 	// run addRoute function when window is in focus
 	mapWindow.addEventListener('focus', updateRoute);
 	

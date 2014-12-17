@@ -14,9 +14,9 @@ function LoginView() {
 	    title:'Grid',
 	    backgroundImage: '/img/bg.jpg',
 	    layout: 'vertical',
-	    statusBarStyle: Ti.UI.iPhone.StatusBar.LIGHT_CONTENT
+	    statusBarStyle: Ti.Platform.osname == 'iphone' ? Ti.UI.iPhone.StatusBar.LIGHT_CONTENT : null
 	});
-	
+
 	//
 	// Topbar view
 	//
