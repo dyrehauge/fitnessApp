@@ -1,4 +1,4 @@
-function mapWindow(prevWindow) {
+function mapWindow(username, uid) {
 	var route;
 	var time;
 	var distance = 0;
@@ -35,7 +35,8 @@ function mapWindow(prevWindow) {
 		bottom: '13px'
 	});
 	backButton.addEventListener('click', function(){
-	    prevWindow.open();
+	    var dash = require('ui/dashboard');
+		new dash(username, uid).open();
 	    mapWindow.close();
 	});
 	navView.add(backButton);

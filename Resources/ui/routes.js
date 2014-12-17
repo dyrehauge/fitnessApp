@@ -1,4 +1,4 @@
-function routes(prevWindow) {
+function routes(username, uid) {
 	//
 	// create base UI and root window
 	//
@@ -29,7 +29,8 @@ function routes(prevWindow) {
 		bottom: '13px'
 	});
 	backButton.addEventListener('click', function(){
-	    prevWindow.open();
+		var dash = require('ui/dashboard');
+		new dash(username, uid).open();
 	    routesWindow.close();
 	});
 	navView.add(backButton);
