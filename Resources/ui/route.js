@@ -1,6 +1,8 @@
 function routeWindow(prevWindow, route) {
 	var time;
+	var distance = 0;
 	var pauseTime = 0;
+	var prevLoc = {};
 	trackingRunning = false;
 	
 	var self = this;
@@ -78,13 +80,17 @@ function routeWindow(prevWindow, route) {
 		
 		startButton.title = trackingRunning ? 'Pause' : 'Play';
 
-		if (trackingRunning) time = Date.now();
+		if (!time && trackingRunning) {
+			time = Date.now();
+
+			setInterval(function() {
+				updateTime();
+			}, 1000);
+		}
 	};
 	updateButtons();
 	
-	setInterval(function() {
-		updateTime();
-	}, 1000);
+	
 	
 	function updateTime() {
 		if (!trackingRunning) pauseTime += 1000;
@@ -93,7 +99,7 @@ function routeWindow(prevWindow, route) {
 			var timeSec = Math.floor((Date.now() - time - pauseTime) / 1000);
 			var sec = addZero(timeSec % 60);
 			var min = addZero(Math.floor(timeSec / 60));
-			timeLabel.text = min + ':' + sec;
+			//timeLabel.text = min + ':' + sec;
 		}
 	}
 	
@@ -184,11 +190,63 @@ function routeWindow(prevWindow, route) {
 		            latitudeDelta:0.001,
 		            longitudeDelta:0.001
 		        };
+
+				var timeMS;
+				if (prevLoc.lat) {
+					distance += parseInt(dist(prevLoc.lat, prevLoc.long, latitude, longitude) * 1000);
+					timeMS = Date.now() - time - pauseTime;
+					console.log(distance, timeMS, route.dist, route.time);
+				}
+				
+				if (distance >= route.dist) {
+					alert('Gz! Du har nu løbet hele distancen!');
+					trackingRunning = false;
+					updateButtons();
+				}
+				
+				var curAvgSpeed = (distance / 1000) / (timeMS / 1000 / 60 / 60);
+				var oldAvgSpeed = (route.dist / 1000) / (route.time / 1000 / 60 / 60);
+				
+				console.log(curAvgSpeed, oldAvgSpeed);
+				var diff = ((route.dist / (distance / timeMS)) - route.time) / 1000;
+				
+				if (curAvgSpeed < oldAvgSpeed) {
+					//alert('You are behind: ' + diff);
+					timeLabel.text = 'Behind: ' + diff.toFixed(1) + 's';
+				}
+				else if (curAvgSpeed > oldAvgSpeed) {
+					//alert('You are ahead: ' + -diff);
+					timeLabel.text = 'Ahead: ' + -diff.toFixed(1) + 's';
+				}
+
+				prevLoc = {
+					"lat": latitude,
+					"long": longitude
+				};
 			}
 		}
 	};
 
 	mapWindow.add(mapview);
+
+
+	// Haversine
+    function dist(lat1, lon1, lat2, lon2) {
+		var dLat = degToRad(lat2-lat1);
+		var dLon = degToRad(lon2-lon1);
+
+		var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2));
+
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+		return 6371 * c;
+    }
+
+    function degToRad(val) {
+        return val * Math.PI / 180;
+    }
+
 
 	return mapWindow;
 }
