@@ -26,265 +26,512 @@ function RegisterView() {
 		backgroundColor: '#d95b44'
 	});
 	
-	var back = Ti.UI.createButton ({
-		title: 'Back',
-		left: '0',
-		top: '20px',
-		width: '20%',
-		backgroundColor: 'transparent',
-		height: '100%',
-		color: '#fff',
-		font: {
-			fontSize: '16dp',
-			fontWeight: 'bold'
-		}
-	});
 	
-	back.addEventListener('click', function(e){
-		var welcomeView = require('ui/welcome-view');
-		new welcomeView().open();
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad') {
+    // Here starts ios styling Here starts Ios setup Here starts ios Styling// Here starts ios styling Here starts Ios setup Here starts ios Styling
+		var back = Ti.UI.createButton ({
+			title: 'Back',
+			left: '0',
+			top: '20px',
+			width: '20%',
+			height: '100%',
+			backgroundColor: 'transparent',
+			color: '#fff',
+			font: {
+				fontSize: '16dp',
+				fontWeight: 'bold'
+			}
+		});
 		
-		registerWin.close();
-	});
+		
+		back.addEventListener('click', function(e){
+			var welcomeView = require('ui/welcome-view');
+			new welcomeView().open();
+			
+			registerWin.close();
+		});
+	
+	
+		registerWin.add(topBar);
+		topBar.add(back);
+		
+		//
+		// Title
+		//
+		var title = Ti.UI.createLabel ({
+			text: 'Register',
+			color: '#fff',
+			font: {
+				fontSize: '20dp',
+				fontWeight: 'bold'
+			},
+			top: '10%'
+		});
+		
+		registerWin.add(title);
+		
+			//
+			// Username field
+			//
+			var user = Ti.UI.createTextField ({
+				width:'70%',
+				height: '90px',
+				color: '#000',
+				backgroundColor: '#fff',
+				top: '50px',
+				hintText: 'Brugernavn',
+				keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+		    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
+			});
+			
+			registerWin.add(user);
+			
+			//
+			// Password field
+			//
+			var pass = Ti.UI.createTextField ({
+				width:'70%',
+				height: '90px',
+				backgroundColor: '#fff',
+				color: '#000',
+				top: '20px',
+				hintText: 'Adgangskode',
+				passwordMask: true,
+		 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+		    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
+			});
+			
+			registerWin.add(pass);
+			
+			
+			//
+			// Email field
+			//
+			var email = Ti.UI.createTextField ({
+				width:'70%',
+				height: '90px',
+				backgroundColor: '#fff',
+				color: '#000',
+				top: '20px',
+				hintText: 'Email',
+		 		keyboardType:Titanium.UI.KEYBOARD_EMAIL,
+		    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+		    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
+			});
+			
+			registerWin.add(email);
+			
+			//
+			// Weight field
+			//
+			var weight = Ti.UI.createTextField ({
+				width:'70%',
+				height: '90px',
+				color: '#000',
+				backgroundColor: '#fff',
+				top: '20px',
+				hintText: 'Vægt',
+		 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+		    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
+			});	
+			
+			registerWin.add(weight);
+			
+			//
+			// Age field
+			//
+			var age = Ti.UI.createTextField ({
+				width:'70%',
+				height: '90px',
+				color: '#000',
+				backgroundColor: '#fff',
+				top: '20px',
+				hintText: 'Alder',
+		 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+		    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
+			});	
+			
+			registerWin.add(age);
+			
+			//
+			// Choose gender titles
+			//
+			var genderTitle = Ti.UI.createView ({
+				width: '40%',
+				height: '20px',
+				layout: 'horizontal',
+				top: '20px'
+			});
+			
+			var male = Ti.UI.createLabel ({
+				text: 'Mand',
+				width: '50%',
+				textAlign: 'center',
+				color: '#fff',
+				font: {
+					fontWeight: 'bold'
+				}
+			});
+			
+			var female = Ti.UI.createLabel ({
+				text: 'Dame',
+				width: '50%',
+				textAlign: 'center',
+				color: '#fff',
+				font: {
+					fontWeight: 'bold'
+				}
+			});
+			
+			registerWin.add(genderTitle);
+			genderTitle.add(male);
+			genderTitle.add(female);
+			
+			//
+			// Gender checkboxes
+			//
+			var genderBoxes = Ti.UI.createView ({
+				width: '40%',
+				height: '50px',
+				layout: 'horizontal',
+				top: '20px'
+			});
+			
+			registerWin.add(genderBoxes);
+			
+			
+			//
+			// Male Box
+			//
+			var maleWrap = Ti.UI.createView ({
+				width: '50%'
+			});
+			
+			var maleBoxView = Ti.UI.createView ({
+				width: '50px',
+				backgroundColor: '#fff'
+				
+			});
+			
+			var maleBox = Ti.UI.createButton ({
+				height: '40px',
+				width: '40px',
+				backgroundColor: '#fff'
+			});
+			
+			/*var maleBoxBtn = Ti.UI.createButton ({
+				height: '90%',
+				width: '90%',
+				backgroundColor: '#fff'
+			});*/
+			
+			genderBoxes.add(maleWrap);
+			maleWrap.add(maleBoxView);
+			maleBoxView.add(maleBox);
+			
+			//
+			// Female box
+			//
+			var femaleWrap = Ti.UI.createView ({
+				width: '50%'
+			});
+			
+			var femaleBoxView = Ti.UI.createView ({
+				width: '50px',
+				backgroundColor: '#fff'
+			});	
+			
+			var femaleBox = Ti.UI.createButton ({
+				height: '40px',
+				width: '40px',
+				backgroundColor: '#fff'
+			});
+			
+			genderBoxes.add(femaleWrap);
+			femaleWrap.add(femaleBoxView);
+			femaleBoxView.add(femaleBox);
+			
+			
+			//
+			// add color switch on checkbox click
+			//
+			var genderPicker = '1';
+			
+			maleBox.addEventListener('click', function(e) {
+				//genderPicker = '1';
+				
+				if (maleBox.backgroundColor != '#000') {
+					maleBox.backgroundColor = '#000';
+					femaleBox.backgroundColor = '#fff';
+				}
+			});
+			
+			femaleBox.addEventListener('click', function(e) {
+				genderpicker = '0';
+				
+				if (femaleBox.backgroundColor != '#000') {
+					femaleBox.backgroundColor = '#000';
+					maleBox.backgroundColor = '#fff';
+				}
+			});
+	
+	}
+	
+	if (Titanium.Platform.name == 'android') {
+	        // Here starts android Here starts android Here starts android Here starts android Here starts android Here starts android Here starts android Here starts android
+			var back = Ti.UI.createButton ({
+				title: 'Back',
+				left: '0',
+				width: '20%',
+				height: '100%',
+				backgroundColor: 'transparent',
+				color: '#fff',
+				font: {
+					fontSize: '16dp',
+					fontWeight: 'bold'
+				}
+			});
+			
+			back.addEventListener('click', function(e){
+				var welcomeView = require('ui/welcome-view');
+				new welcomeView().open();
+				
+				registerWin.close();
+			});
+		
+		
+			registerWin.add(topBar);
+			topBar.add(back);
+			
+			//
+			// Title
+			//
+			var title = Ti.UI.createLabel ({
+				text: 'Register',
+				color: '#fff',
+				font: {
+					fontSize: '20dp',
+					fontWeight: 'bold'
+				},
+				top: '10%'
+			});
+			
+			registerWin.add(title);
 
-
-	registerWin.add(topBar);
-	topBar.add(back);
+			
+			//
+			// Username field
+			//
+			var user = Ti.UI.createTextField ({
+				width:'70%',
+				height: '8%',
+				color: '#000',
+				backgroundColor: '#fff',
+				top: '50px',
+				hintText: 'Brugernavn',
+				keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+		    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
+			});
+			
+			registerWin.add(user);
+			
+			//
+			// Password field
+			//
+			var pass = Ti.UI.createTextField ({
+				width:'70%',
+				height: '8%',
+				color: '#000',
+				backgroundColor: '#fff',
+				top: '20px',
+				hintText: 'Adgangskode',
+				keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+		    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
+			});
+			
+			registerWin.add(pass);
+			
+			
+			//
+			// Email field
+			//
+			var email = Ti.UI.createTextField ({
+				width:'70%',
+				height: '8%',
+				color: '#000',
+				backgroundColor: '#fff',
+				top: '20px',
+				hintText: 'Email',
+		 		keyboardType:Titanium.UI.KEYBOARD_EMAIL,
+		    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+		    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
+			});
+			
+			registerWin.add(email);
+			
+			//
+			// Weight field
+			//
+			var weight = Ti.UI.createTextField ({
+				width:'70%',
+				height: '8%',
+				color: '#000',
+				backgroundColor: '#fff',
+				top: '20px',
+				hintText: 'Vægt',
+		 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+		    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
+			});	
+			
+			registerWin.add(weight);
+			
+			//
+			// Age field
+			//
+			var age = Ti.UI.createTextField ({
+				width:'70%',
+				height: '8%',
+				color: '#000',
+				backgroundColor: '#fff',
+				top: '20px',
+				hintText: 'Alder',
+		 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
+		    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
+			});	
+			
+			registerWin.add(age);
+			
+			//
+			// Choose gender titles
+			//
+			var genderTitle = Ti.UI.createView ({
+				width: '40%',
+				height: '20px',
+				layout: 'horizontal',
+				top: '20px'
+			});
+			
+			var male = Ti.UI.createLabel ({
+				text: 'Mand',
+				width: '50%',
+				textAlign: 'center',
+				color: '#fff',
+				font: {
+					fontWeight: 'bold'
+				}
+			});
+			
+			var female = Ti.UI.createLabel ({
+				text: 'Dame',
+				width: '50%',
+				textAlign: 'center',
+				color: '#fff',
+				font: {
+					fontWeight: 'bold'
+				}
+			});
+			
+			registerWin.add(genderTitle);
+			genderTitle.add(male);
+			genderTitle.add(female);
+			
+			//
+			// Gender checkboxes
+			//
+			var genderBoxes = Ti.UI.createView ({
+				width: '50%',
+				height: '50px',
+				layout: 'horizontal',
+				top: '20px'
+			});
+			
+			registerWin.add(genderBoxes);
+			
+			
+			//
+			// Male Box
+			//
+			var maleWrap = Ti.UI.createView ({
+				width: '50%'
+			});
+			
+			var maleBoxView = Ti.UI.createView ({
+				width: '50px',
+				backgroundColor: '#fff'
+				
+			});
+			
+			var maleBox = Ti.UI.createView ({
+				height: '40px',
+				width: '40px',
+				backgroundColor: '#fff'
+			});
+			
+			/*var maleBoxBtn = Ti.UI.createButton ({
+				height: '90%',
+				width: '90%',
+				backgroundColor: '#fff'
+			});*/
+			
+			genderBoxes.add(maleWrap);
+			maleWrap.add(maleBoxView);
+			maleBoxView.add(maleBox);
+			
+			//
+			// Female box
+			//
+			var femaleWrap = Ti.UI.createView ({
+				width: '50%'
+			});
+			
+			var femaleBoxView = Ti.UI.createView ({
+				width: '50px',
+				backgroundColor: '#fff'
+			});	
+			
+			var femaleBox = Ti.UI.createView ({
+				height: '40px',
+				width: '40px',
+				backgroundColor: '#fff'
+			});
+			
+			genderBoxes.add(femaleWrap);
+			femaleWrap.add(femaleBoxView);
+			femaleBoxView.add(femaleBox);
+			
+			
+			//
+			// add color switch on checkbox click
+			//
+			var genderPicker = '1';
+			
+			maleBox.addEventListener('click', function(e) {
+				//genderPicker = '1';
+				
+				if (maleBox.backgroundColor != '#000') {
+					maleBox.backgroundColor = '#000';
+					femaleBox.backgroundColor = '#fff';
+				}
+			});
+			
+			femaleBox.addEventListener('click', function(e) {
+				genderpicker = '0';
+				
+				if (femaleBox.backgroundColor != '#000') {
+					femaleBox.backgroundColor = '#000';
+					maleBox.backgroundColor = '#fff';
+				}
+			});
 	
-	//
-	// Title
-	//
-	var title = Ti.UI.createLabel ({
-		text: 'Register',
-		color: '#fff',
-		font: {
-			fontSize: '35dp',
-			fontWeight: 'bold'
-		},
-		top: '10%'
-	});
-	
-	registerWin.add(title);
-	
-	//
-	// Username field
-	//
-	var user = Ti.UI.createTextField ({
-		width:'70%',
-		height: '90px',
-		color: '#000',
-		backgroundColor: '#fff',
-		borderColor: '#000',
-		borderWidth: '1px',
-		top: '50px',
-		hintText: 'Brugernavn',
-		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
-    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
-    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
-	});
-	
-	registerWin.add(user);
-	
-	//
-	// Password field
-	//
-	var pass = Ti.UI.createTextField ({
-		width:'70%',
-		height: '90px',
-		backgroundColor: '#fff',
-		borderColor: '#000',
-		color: '#000',
-		borderWidth: '1px',
-		top: '20px',
-		hintText: 'Adgangskode',
-		passwordMask: true,
- 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
-    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
-    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
-	});
-	
-	registerWin.add(pass);
-	
-	
-	//
-	// Email field
-	//
-	var email = Ti.UI.createTextField ({
-		width:'70%',
-		height: '90px',
-		backgroundColor: '#fff',
-		color: '#000',
-		borderColor: '#000',
-		borderWidth: '1px',
-		top: '20px',
-		hintText: 'Email',
- 		keyboardType:Titanium.UI.KEYBOARD_EMAIL,
-    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
-    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
-	});
-	
-	registerWin.add(email);
-	
-	//
-	// Weight field
-	//
-	var weight = Ti.UI.createTextField ({
-		width:'70%',
-		height: '90px',
-		color: '#000',
-		backgroundColor: '#fff',
-		borderColor: '#000',
-		borderWidth: '1px',
-		top: '20px',
-		hintText: 'Vægt',
- 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
-    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
-    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
-	});	
-	
-	registerWin.add(weight);
-	
-	//
-	// Age field
-	//
-	var age = Ti.UI.createTextField ({
-		width:'70%',
-		height: '90px',
-		color: '#000',
-		backgroundColor: '#fff',
-		borderColor: '#000',
-		borderWidth: '1px',
-		top: '20px',
-		hintText: 'Alder',
- 		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
-    	returnKeyType:Titanium.UI.RETURNKEY_DEFAULT,
-    	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED		
-	});	
-	
-	registerWin.add(age);
-	
-	//
-	// Choose gender titles
-	//
-	var genderTitle = Ti.UI.createView ({
-		width: '40%',
-		height: '20px',
-		layout: 'horizontal',
-		top: '20px'
-	});
-	
-	var male = Ti.UI.createLabel ({
-		text: 'Mand',
-		width: '50%',
-		textAlign: 'center',
-		color: '#fff',
-		font: {
-			fontWeight: 'bold'
-		}
-	});
-	
-	var female = Ti.UI.createLabel ({
-		text: 'Dame',
-		width: '50%',
-		textAlign: 'center',
-		color: '#fff',
-		font: {
-			fontWeight: 'bold'
-		}
-	});
-	
-	registerWin.add(genderTitle);
-	genderTitle.add(male);
-	genderTitle.add(female);
-	
-	//
-	// Gender checkboxes
-	//
-	var genderBoxes = Ti.UI.createView ({
-		width: '40%',
-		height: '50px',
-		layout: 'horizontal',
-		top: '20px'
-	});
-	
-	registerWin.add(genderBoxes);
-	
-	
-	//
-	// Male Box
-	//
-	var maleWrap = Ti.UI.createView ({
-		width: '50%'
-	});
-	
-	var maleBoxView = Ti.UI.createView ({
-		width: '50px',
-		backgroundColor: '#fff'
-		
-	});
-	
-	var maleBox = Ti.UI.createButton ({
-		height: '40px',
-		width: '40px',
-		backgroundColor: '#fff'
-	});
-	
-	/*var maleBoxBtn = Ti.UI.createButton ({
-		height: '90%',
-		width: '90%',
-		backgroundColor: '#fff'
-	});*/
-	
-	genderBoxes.add(maleWrap);
-	maleWrap.add(maleBoxView);
-	maleBoxView.add(maleBox);
-	
-	//
-	// Female box
-	//
-	var femaleWrap = Ti.UI.createView ({
-		width: '50%'
-	});
-	
-	var femaleBoxView = Ti.UI.createView ({
-		width: '50px',
-		backgroundColor: '#fff'
-	});	
-	
-	var femaleBox = Ti.UI.createButton ({
-		height: '40px',
-		width: '40px',
-		backgroundColor: '#fff'
-	});
-	
-	genderBoxes.add(femaleWrap);
-	femaleWrap.add(femaleBoxView);
-	femaleBoxView.add(femaleBox);
-	
-	
-	//
-	// add color switch on checkbox click
-	//
-	var genderPicker = '1';
-	
-	maleBox.addEventListener('click', function(e) {
-		//genderPicker = '1';
-		
-		if (maleBox.backgroundColor != '#000') {
-			maleBox.backgroundColor = '#000';
-			femaleBox.backgroundColor = '#fff';
-		}
-	});
-	
-	femaleBox.addEventListener('click', function(e) {
-		genderpicker = '0';
-		
-		if (femaleBox.backgroundColor != '#000') {
-			femaleBox.backgroundColor = '#000';
-			maleBox.backgroundColor = '#fff';
-		}
-	});
-	
+	}
 	//
 	// Register button
 	//

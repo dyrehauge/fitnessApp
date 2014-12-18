@@ -33,54 +33,86 @@ function settings(username, uid) {
 	//
 	// Back to previous window
 	//
-	var backButton = Ti.UI.createLabel({
-		text: 'Back',
-		color: '#fff',
-		left: '15px',
-		bottom: '13px'
-	});
-	
-	backButton.addEventListener('click', function(){
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad') {
+		var backButton = Ti.UI.createLabel({
+			text: 'Back',
+			color: '#fff',
+			left: '15px',
+			bottom: '13px'
+		});
+		
+		backButton.addEventListener('click', function(){
 	    var dash = require('ui/dashboard');
 		new dash(username,uid).open();
 	    settingsWin.close();
-	});
+		});
+		
+		topBar.add(backButton);
+	}
 	
-	topBar.add(backButton);
+	if (Ti.Platform.osname === 'android') {
+		var backButton = Ti.UI.createLabel({
+			text: 'Back',
+			color: '#fff',
+			left: '15px'
+		});
+		
+		backButton.addEventListener('click', function(){
+	    var dash = require('ui/dashboard');
+		new dash(username,uid).open();
+	    settingsWin.close();
+		});
+		
+		topBar.add(backButton);
+	}
+
 	
 	//
 	// Title
 	//
-	var contentTitle = Ti.UI.createLabel({
-		text: 'Settings',
-		color: '#fff',
-		TextAlign: 'center',
-		bottom: '13px',
-		font : {
-			fontSize: '17dp',
-			fontWeight: 'bold'
-		}
-		
-	});
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad') {
+		var contentTitle = Ti.UI.createLabel({
+			text: 'Settings',
+			color: '#fff',
+			TextAlign: 'center',
+			bottom: '13px',
+			font : {
+				fontSize: '17dp',
+				fontWeight: 'bold'
+			}
+		});
+		topBar.add(contentTitle);
+	}
 	
-	topBar.add(contentTitle);
+	if (Ti.Platform.osname === 'android') {
+		var contentTitle = Ti.UI.createLabel({
+			text: 'Settings',
+			color: '#fff',
+			TextAlign: 'center',
+			font : {
+				fontSize: '17dp',
+				fontWeight: 'bold'
+			}
+		});
+		topBar.add(contentTitle);	
+	}
 	
 	
 	//
-	// Voice alerts
+	// Voice view alerts
 	//
 	var voiceView = Ti.UI.createView ({
 		layout: 'horizontal',
 		width: '100%',
 		height: '80px',
-		top : '20px',
+		top: '20px',
 		backgroundColor: 'transparent'
 	});
 	
 	settingsWin.add(voiceView);
 	
 	// Voice label
-	var voiceLabView = Ti.UI.createLabel ({
+	var voiceLabView = Ti.UI.createView ({
 		width: '60%'
 	});
 	
@@ -114,14 +146,14 @@ function settings(username, uid) {
 	});
 	
 	switchView.add(voiceSwitch);
-
+	
 	// Change switch value on click
 	voiceSwitch.addEventListener('change',function(e){
-		Ti.API.info('Switch value: ' + voiceSwitch.value);
+		Ti.API.info('Switch value: ' + popupSwitch.value);
 	});
 	
-	// Border bottom
-	var borderBtm = Ti.UI.createView ({
+	// Border bottom Voice
+	var borderBtmVoice = Ti.UI.createView ({
 		width: '100%',
 		top: '10px',
 		bottom: '10px',
@@ -130,8 +162,7 @@ function settings(username, uid) {
 		
 	});
 	
-	settingsWin.add(borderBtm);
-	
+	settingsWin.add(borderBtmVoice);
 	
 	//
 	// Popup alerts
@@ -201,7 +232,7 @@ function settings(username, uid) {
 	//
 	// Update Weight View
 	//
-	var weightView = Ti.UI.createButton ({
+	var weightView = Ti.UI.createView ({
 		layout: 'horizontal',
 		height: '80px',
 		width: '100%',
@@ -243,7 +274,7 @@ function settings(username, uid) {
 	
 	// Label for current weight
 	var curWeightLab = Ti.UI.createLabel ({
-		text : '',
+		text: '',
 		right: '0px',
 		color: '#bab8b8',
 		font : {
@@ -282,7 +313,7 @@ function settings(username, uid) {
 	// 
 	// update Age
 	//
-	var ageView = Ti.UI.createButton ({
+	var ageView = Ti.UI.createView ({
 		layout: 'horizontal',
 		height: '80px',
 		width: '100%',
@@ -324,7 +355,7 @@ function settings(username, uid) {
 	
 	// Label for current weight
 	var curAgeLab = Ti.UI.createLabel ({
-		text : '',
+		text: '',
 		right: '0px',
 		color: '#bab8b8',
 		font : {
