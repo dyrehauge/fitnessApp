@@ -26,6 +26,25 @@ function LoginView() {
 		backgroundColor: '#d95b44'
 	});
 	
+	if (Titanium.Platform.name == 'android') {
+    // Android stuff
+	var back = Ti.UI.createButton ({
+		title: 'Back',
+		left: '0',
+		width: '20%',
+		height: '100%',
+		backgroundColor: 'transparent',
+		color: '#fff',
+		font: {
+			fontSize: '16dp',
+			fontWeight: 'bold'
+		}
+	});
+	
+	}
+	
+	if (Titanium.Platform.name == 'ios') {
+    // Android stuff
 	var back = Ti.UI.createButton ({
 		title: 'Back',
 		left: '0',
@@ -40,6 +59,7 @@ function LoginView() {
 		}
 	});
 	
+	}
 	back.addEventListener('click', function(e){
 		var welcomeView = require('ui/welcome-view');
 		new welcomeView().open();
@@ -74,8 +94,6 @@ function LoginView() {
 		width:'70%',
 		height: '90px',
 		backgroundColor: '#fff',
-		borderColor: '#000',
-		borderWidth: '1px',
 		top: '50px',
 		color: '#000',
 		hintText: 'Brugernavn',
@@ -94,8 +112,6 @@ function LoginView() {
 		height: '90px',
 		backgroundColor: '#fff',
 		color: '#000',
-		borderColor: '#000',
-		borderWidth: '1px',
 		top: '20px',
 		hintText: 'Adgangskode',
 		passwordMask: true,

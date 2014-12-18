@@ -17,17 +17,32 @@ function routes(username, uid) {
 	    top: '0',
 	    width: Ti.UI.FILL
 	});
-	navView.add(Ti.UI.createLabel({
-		text: 'Routes',
-		color: '#fff',
-		bottom: '13px'
-	}));
-	var backButton = Ti.UI.createLabel({
-		text: 'Back',
-		color: '#fff',
-		left: '15px',
-		bottom: '13px'
-	});
+	
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad') {
+		navView.add(Ti.UI.createLabel({
+			text: 'Routes',
+			color: '#fff',
+			bottom: '13px'
+		}));
+		var backButton = Ti.UI.createLabel({
+			text: 'Back',
+			color: '#fff',
+			left: '15px',
+			bottom: '13px'
+		});
+	}
+	
+	if (Titanium.Platform.name == 'android') {
+		navView.add(Ti.UI.createLabel({
+			text: 'Routes',
+			color: '#fff'
+		}));
+		var backButton = Ti.UI.createLabel({
+			text: 'Back',
+			color: '#fff',
+			left: '15px'
+		});
+	}
 	backButton.addEventListener('click', function(){
 		var dash = require('ui/dashboard');
 		new dash(username, uid).open();
@@ -63,7 +78,8 @@ function routes(username, uid) {
 			});
 
 			label = Ti.UI.createLabel({
-				text: 'Time: ' + routes[i].time + ' Dist: ' + routes[i].dist
+				text: 'Time: ' + routes[i].time + ' Dist: ' + routes[i].dist,
+				color:"#000"
 			});
 			newView.add(label);
 
