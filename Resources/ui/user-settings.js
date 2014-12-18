@@ -4,7 +4,6 @@
 //
 
 function settings(username, uid) {
-	console.log("user " + uid);
 	// api
 	var url = 'http://m452310y2012.mmd.eal.dk/drupal/api/user/' + uid;
 	

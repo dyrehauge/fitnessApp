@@ -25,45 +25,42 @@ function LoginView() {
 		width: '100%',
 		backgroundColor: '#d95b44'
 	});
-	
+
+	var back;	
 	if (Titanium.Platform.name == 'android') {
-    // Android stuff
-	var back = Ti.UI.createButton ({
-		title: 'Back',
-		left: '0',
-		width: '20%',
-		height: '100%',
-		backgroundColor: 'transparent',
-		color: '#fff',
-		font: {
-			fontSize: '16dp',
-			fontWeight: 'bold'
-		}
-	});
-	
+	    // Android stuff
+		var back = Ti.UI.createButton ({
+			title: 'Back',
+			left: '0',
+			width: '20%',
+			height: '100%',
+			backgroundColor: 'transparent',
+			color: '#fff',
+			font: {
+				fontSize: '16dp',
+				fontWeight: 'bold'
+			}
+		});
 	}
-	
-	if (Titanium.Platform.name == 'ios') {
-    // Android stuff
-	var back = Ti.UI.createButton ({
-		title: 'Back',
-		left: '0',
-		top: '20px',
-		width: '20%',
-		height: '100%',
-		backgroundColor: 'transparent',
-		color: '#fff',
-		font: {
-			fontSize: '16dp',
-			fontWeight: 'bold'
-		}
-	});
-	
+	else {
+		back = Ti.UI.createButton ({
+			title: 'Back',
+			left: '0',
+			top: '20px',
+			width: '20%',
+			height: '100%',
+			backgroundColor: 'transparent',
+			color: '#fff',
+			font: {
+				fontSize: '16dp',
+				fontWeight: 'bold'
+			}
+		});
 	}
+
 	back.addEventListener('click', function(e){
 		var welcomeView = require('ui/welcome-view');
 		new welcomeView().open();
-		
 		loginWin.close();
 	});
 	
